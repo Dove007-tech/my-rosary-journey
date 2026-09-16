@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>54-Day Novena Pilgrimage Tracker</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #E8F5E9; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; }
+        .lang-selector { display: flex; background-color: #C8E6C9; border-radius: 25px; padding: 4px; margin-bottom: 15px; width: 100%; max-width: 400px; justify-content: space-around; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.toggle-btn { background: none; border: none; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #2E7D32; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
+        button.toggle-btn.active { background-color: #1B5E20; color: #FFF; }
+        .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 5px 0; font-family: Georgia, serif; text-align: center; }
+        .step-counter { font-size: 13px; color: #4CAF50; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        
+        .mountain-map { width: 360px; height: 180px; background-color: #A5D6A7; border-radius: 30px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .map-bg-grass { position: absolute; bottom: 0; width: 100%; height: 120px; background-color: #66BB6A; border-top-left-radius: 50% 30px; border-top-right-radius: 50% 30px; }
+        
+        .mary-peak-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; }
+        .crown-box { width: 74px; height: 74px; border-radius: 37px; border: 4px solid #FFD54F; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 34px; transition: all 0.4s ease; }
+        .crown-box.garlanded { background-color: #FFF0F5; border-color: #FF69B4; box-shadow: 0 0 20px #FF69B4; animation: swell 1s ease-in-out infinite alternate; }
+        @keyframes swell { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
+        .peak-label { font-size: 11px; font-weight: 800; color: #1B5E20; text-transform: uppercase; margin-top: 5px; background-color: #FFF; padding: 2px 10px; border-radius: 12px; border: 1px solid #FFD54F; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        .lamb-container { position: absolute; width: 44px; height: 44px; background-color: #FFFFFF; border: 3px solid #1B5E20; border-radius: 22px; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 10; transform: translate(-50%, -50%); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .milestone-alert { width: 100%; max-width: 400px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; display: none; font-size: 14px; font-weight: 700; color: #1B5E20; animation: pop 0.3s ease-out; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        @keyframes pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .grid-chart-title { font-size: 12px; font-weight: 800; color: #1B5E20; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .novena-grid { display: flex; flex-direction: column-reverse; gap: 5px; width: 100%; max-width: 400px; background-color: #FFF; border-radius: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #A5D6A7; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; width: 100%; }
+        .grid-day { height: 34px; background-color: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; color: #616161; transition: all 0.2s; }
+        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; color: #FFF; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .grid-day.current { background-color: #81C784; border-color: #2E7D32; color: #FFF; font-size: 14px; animation: glow 1.5s infinite alternate; }
+        @keyframes glow { 0% { box-shadow: 0 0 2px #4CAF50; } 100% { box-shadow: 0 0 10px #2E7D32; } }
+        
+        .prayer-card { width: 100%; max-width: 400px; background-color: #FFF; border-radius: 16px; padding: 18px; margin-bottom: 15px; border: 2px solid #C8E6C9; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.02); min-height: 140px; display: flex; flex-direction: column; }
+        .prayer-header { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; color: #1B5E20; border-bottom: 1px solid #E8F5E9; padding-bottom: 4px; }
+        .prayer-text { font-size: 14px; color: #3A3A3C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; flex-grow: 1; }
+        
+        .action-btn { width: 100%; max-width: 400px; background-color: #1B5E20; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+        .action-btn:active { transform: scale(0.99); }
+        .action-btn:disabled { background-color: #C8E6C9; box-shadow: none; cursor: not-allowed; color: #81C784; }
+        
+        .devotions-container { width: 100%; max-width: 400px; margin-top: 10px; border-top: 2px solid #C8E6C9; padding-top: 15px; }
+        .closing-card { background-color: #FFF; border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid #E8F5E9; }
+        .closing-card-title { font-size: 13px; font-weight: 700; color: #1B5E20; margin-bottom: 4px; font-family: Georgia, serif; }
+        .closing-card-text { font-size: 13px; color: #4A4A4C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; }
+        .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-selector">
+        <button class="toggle-btn active" id="btn-en" onclick="setLanguage('en')">ENG</button>
+        <button class="toggle-btn" id="btn-ta" onclick="setLanguage('ta')">TAM</button>
+    </div>
+
+    <h1 class="app-title" id="app-title">54-Day Novena Pilgrimage</h1>
+    <div class="step-counter" id="step-counter">Preparation Steps</div>
+
+    <div class="mountain-map">
+        <div class="map-bg-grass"></div>
+        <div class="mary-peak-container">
+            <div class="crown-box" id="crown-element">👑</div>
+            <div class="peak-label" id="peak-label">Our Lady</div>
+        </div>
+        <div class="lamb-container" id="lamb">🐑</div>
+    </div>
+
+    <div class="milestone-alert" id="milestone-box"></div>
+
+    <div class="grid-chart-title" id="chart-heading">Novena Day Calendar Chart</div>
+    <div id="chart-grid" class="novena-grid"></div>
+
+    <div class="prayer-card">
+        <div class="prayer-header" id="prayer-header">Introductory Devotions</div>
+        <div class="prayer-text" id="prayer-text">Loading...</div>
+    </div>
+
+    <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Novena Journey</button>
+
+    <div class="devotions-container">
+        <div class="closing-card">
+            <div class="closing-card-title" id="lbl-queen">Hail, Holy Queen (Salve Regina)</div>
+            <div class="closing-card-text" id="text-queen">Loading...</div>
+        </div>
+        <div class="closing-card">
+            <div class="closing-card-title" id="lbl-memorare">The Memorare</div>
+            <div class="closing-card-text" id="text-memorare">Loading...</div>
+        </div>
+        <button class="reset-btn" id="btn-reset" onclick="resetNovena()">Reset Novena Progress</button>
+    </div>
+
+    <script>
+        let currentStep = 0; 
+        let lang = 'en';
+        const TOTAL_STEPS = 56; 
+
+        const NOVENA_CONTENT = {
+            en: {
+                title: "54-Day Novena Pilgrimage", begin: "Begin Novena Journey", advance: "Leap Lost Lamb 🌹", finished: "Novena Fulfilled ✨", peak: "Our Lady", reset: "Reset Novena Progress", lblChart: "Novena Day Calendar Chart", lblQueen: "Hail, Holy Queen (Salve Regina)", lblMemorare: "The Memorare",
+                msgDay9: "✨ Day 9 Spiritual Word:\nYour initial 9-day petition prayer cycle is successfully offered. Stay strong and keep walking in complete trust, little lamb!",
+                msgDay27: "🎁 Day 27 Spiritual Word:\nYou have completed the 27-day Petition Novena phase! Receive the gift of profound inner peace as you cross this boundary.",
+                msgThanksgiving: "🌻 Thanksgiving Novena Mode:\nYou are now entering the 27-day Thanksgiving period, offering pure gratitude for prayers heard.",
+                msgDay54: "🌸 Day 54 Flower Garland Offered:\nCongratulations! Your 54-Day Novena cycle is fully accomplished. A beautiful crown of blooming flowers has been placed on the Crown of Mother Mary! ✨",
+                introSteps: [
+                    { header: "Preparation: The Sign of the Cross", text: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen." },
