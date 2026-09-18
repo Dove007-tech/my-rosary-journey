@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Holy Rosary Companion</title>
+    <title>The Kid-Friendly Holy Rosary Companion</title>
     <style>
         body { font-family: "Georgia", serif; background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 100%); color: #0D47A1; margin: 0; padding: 0; line-height: 1.6; min-height: 100vh; }
         .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
@@ -45,7 +45,7 @@
         <div class="content-card">
             <div class="lang-en">
                 <div class="section-heading">Weekly Mystery Guide</div>
-                <p class="text-block">The Mysteries of the Rosary are systematically assigned to specific days of the week to structure our daily devotions:</p>
+                <p class="text-block">The Mysteries of the Rosary are assigned to specific days of the week to structure our devotions:</p>
                 <ul class="day-list">
                     <li><strong>Monday & Saturday:</strong> The Joyful Mysteries</li>
                     <li><strong>Tuesday & Friday:</strong> The Sorrowful Mysteries</li>
@@ -65,41 +65,33 @@
             </div>
         </div>
 
-        <!-- 📿 CARD 2: Dynamic Mystery Injection Box Panel -->
+        <!-- 📿 CARD 2: Dynamic Unbreakable Interactive Grid Engine Container -->
         <div class="content-card">
-            <div id="mysteries-container"></div>
+            <div id="app-dynamic-view"></div>
         </div>
     </div>
 
     <script>
-        const groups = [
+        const headings = [
             { en: "The Joyful Mysteries", ta: "மகிழ்ச்சி நிறை மறைபொருட்கள்" },
             { en: "The Luminous Mysteries", ta: "ஒளி நிறை மறைபொருட்கள்" },
             { en: "The Sorrowful Mysteries", ta: "துயரம் நிறை மறைபொருட்கள்" },
             { en: "The Glorious Mysteries", ta: "மகிமை நிறை மறைபொருட்கள்" }
         ];
 
-        const data = [
-            // Joyful
-            { g:0, n:"1", en:["The Annunciation","Angel Gabriel appears to Mary."], ta:["கபிரியேல் தூது உரைத்தது","கபிரியேல் வானதூதர் மரியாவுக்கு இறைமகனை கருத்தாங்குவார் என அறிவிக்கிறார்."] },
-            { g:0, n:"2", en:["The Visitation","Mary visits her cousin Elizabeth."], ta:["மரியா எலிசபெத்தைச் சந்தித்தது","மரியா எலிசபெத்தை சந்திக்கச் செல்கிறார், அவர் மரியாவை ஆண்டவரின் தாயாக வாழ்த்துகிறார்."] },
-            { g:0, n:"3", en:["The Nativity","Jesus Christ is born in Bethlehem."], ta:["இயேசு கிறித்துவின் பிறப்பு","இயேசு கிறிஸ்து பெத்லகேமில் உள்ள ஒரு எளிய மாட்டுத்தொழுவத்தில் பிறக்கிறார்."] },
-            { g:0, n:"4", en:["The Presentation","Presentation of Jesus in the Temple."], ta:["இயேசுவை ஆலயத்தில் அர்ப்பணித்தது","மரியாவும் யோசேப்பும் குழந்தை இயேசுவை எருசலேம் ஆலயத்தில் அர்ப்பணிக்கிறார்கள்."] },
-            { g:0, n:"5", en:["The Finding in the Temple","Finding Jesus teaching the doctors."], ta:["இயேசுவை ஆலயத்தில் கண்டடைந்தது","மூன்று நாட்கள் தேடுதலுக்குப் பிறகு, சிறுவன் இயேசுவை ஆலயத்தில் கண்டடைகிறார்கள்."] },
-            // Luminous
-            { g:1, n:"1", en:["The Baptism in the Jordan","The Holy Spirit descends upon Jesus."], ta:["இயேசு யோர்தான் ஆற்றில் திருமுழுக்கு","யோவான் இயேசுவுக்கு திருமுழுக்கு கொடுக்கும்போது தூய ஆவி அவர் மேல் இறங்குகிறது."] },
-            { g:1, n:"2", en:["The Wedding at Cana","Jesus transforms water into wine."], ta:["கானா ஊர் திருமண புதுமை","அன்னை மரியாவின் வேண்டுகோளுக்கு இணங்கி, இயேசு தண்ணீரைத் திராட்சை இரசமாக மாற்றுகிறார்."] },
-            { g:1, n:"3", en:["The Proclamation of the Kingdom","Jesus calls all to repentance."], ta:["இறையாட்சியைப் பறைசாற்றியது","இயேசு மனிதர்களை மனம்மாறும்படி அழைத்து, கடவுளின் அரசாங்கம் நெருங்கி வந்துவிட்டது என்கிறார்."] },
-            { g:1, n:"4", en:["The Transfiguration","Jesus reveals His divine glory."], ta:["தாபோர் மலையில் உருமாற்றம்","இயேசு தாபோர் மலையின் உச்சியில் அப்போஸ்தலர்களுக்குத் தமது தெய்வீக மகிமையை வெளிப்படுத்துகிறார்."] },
-            { g:1, n:"5", en:["The Institution of the Eucharist","Jesus offers His Body and Blood."], ta:["நற்கருணையை ஏற்படுத்தியது","இறுதி இரவு உணவின் போது, இயேசு அப்பத்தையும் இரசத்தையும் தமது திருவுடலாக மாற்றுகிறார்."] },
-            // Sorrowful
-            { g:2, n:"1", en:["The Agony in the Garden","Jesus prays in anguish."], ta:["பூங்காவனத்தில் இரத்த வேர்வை","இயேசு கெத்சமனி தோட்டத்தில் தமது பாடுகளின் முன்தின இரவில் மிகுந்த வேதனையுடன் ஜெபிக்கிறார்."] },
-            { g:2, n:"2", en:["The Scourging at the Pillar","Jesus is brutally scourged."], ta:["கற்றூணில் கட்டப்பட்டு அடிபட்டது","இயேசு ரோமானிய போர்வீரர்களால் கற்றூணில் கட்டப்பட்டு, கொடூரமாக சாட்டையால் அடிக்கப்படுகிறார்."] },
-            { g:2, n:"3", en:["The Crowning with Thorns","A crown of thorns forced on His head."], ta:["இயேசுவுக்கு முள்முடி சூட்டியது","இயேசுவின் அரச உரிமையைப் பரியாசம் செய்யும்பொருட்டு, கூர்மையான முட்களால் ஆன முடி சூட்டப்படுகிறது."] },
-            { g:2, n:"4", en:["The Carrying of the Cross","Jesus carries the cross to Calvary."], ta:["சிலுவை சுமந்து சென்றது","இயேசு கனமான மரச் சிலுவையைத் தமது தோள்களில் சுமந்து, கல்வாரி மலையை நோக்கி நடக்கிறார்."] },
-            { g:2, n:"5", en:["The Crucifixion","Jesus dies on the cross."], ta:["சிலுவையில் அறையப்பட்டு இறந்தது","இயேசு சிலுவையில் ஆணிகளால் அறையப்பட்டு, நம்முடைய மீட்புக்காக உயிர்விடுகிறார்."] },
-            // Glorious
-            { g:3, n:"1", en:["The Resurrection","Jesus rises from the dead."], ta:["இயேசு உயிர்த்தெழுந்தது","இயேசு இறந்த மூன்றாம் நாள் மகிமையோடு உயிர்த்தெழுந்தார்."] },
-            { g:3, n:"2", en:["The Ascension","Jesus ascends into Heaven."], ta:["விண்ஏற்றம்","உயிர்த்தெழுந்த நாற்பதாம் நாளில், இயேசு உடலோடும் ஆன்மாவோடும் விண்ணகத்திற்கு ஏறிச் சென்றார்."] },
-            { g:3, n:"3", en:["The Descent of the Holy Spirit","The Holy Spirit descends in tongues of fire."], ta:["தூய ஆவியார் எழுந்தருளியது","தூய ஆவியார் நெருப்பு நாவுகளின் வடிவில் அப்போஸ்தலர்கள் மேல் இறங்கி வந்தார்."] },
-            { g:3, n:"4", en:["The Assumption","Mary is assumed body and soul."], ta:["விண்ணகத்திற்கு எடுக்கப்பட்டது","மரியா தமது உலக வாழ்வின் முக்கிய முடிவில் உடலோடும் ஆன்மாவோடும் விண்ணக மகிமைக்கு எடுத்துக் கொள்ளப்பட்டார்."] },
+        const dataArray = [
+            { r:0, i:"1", en:["The Annunciation","The Angel Gabriel appears to Mary, announcing she will conceive the Son of God by the power of the Holy Spirit."], ta:["கபிரியேல் தூது உரைத்தது","மரியா தூய ஆவியின் வல்லமையால் இறைமகனை கருத்தாங்குவார் என்று கபிரியேல் வானதூதர் மரியாவுக்கு அறிவிக்கிறார்."] },
+            { r:0, i:"2", en:["The Visitation","Mary journeys to visit her cousin Elizabeth, who recognizes her as the Mother of the Lord."], ta:["மரியா எலிசபெத்தம்மாளை சந்தித்தது","மரியா தன் உறவினரான எலிசபெத்தை சந்திக்கச் செல்கிறார், அவர் மரியாவை ஆண்டவரின் தாயாக வாழ்த்துகிறார்."] },
+            { r:0, i:"3", en:["The Nativity","Jesus Christ is born in a humble stable in Bethlehem, wrapped in swaddling clothes and laid in a manger."], ta:["இயேசு கிறித்துவின் பிறப்பு","இயேசு கிறிஸ்து பெத்லகேமில் உள்ள ஒரு எளிய மாட்டுத்தொழுவத்தில் பிறக்கிறார்."] },
+            { r:0, i:"4", en:["The Presentation","Mary and Joseph present the infant Jesus in the Temple according to the Law of Moses."], ta:["இயேசுவை ஆலயத்தில் அர்ப்பணித்தது","மரியாவும் யோசேப்பும் குழந்தை இயேசுவை எருசலேம் ஆலயத்தில் இறைவனுக்கு அர்ப்பணிக்கிறார்கள்."] },
+            { r:0, i:"5", en:["The Finding in the Temple","After three days of anxious searching, Mary and Joseph find the young Jesus teaching the doctors in the Temple."], ta:["இயேசுவை ஆலயத்தில் கண்டடைந்தது","மூன்று நாட்கள் தேடுதலுக்குப் பிறகு, மரியாவும் யோசேப்பும் சிறுவன் இயேசுவை ஆலயத்தில் அறிஞர்களுடன் கண்டடைகிறார்கள்."] },
+            
+            { r:1, i:"1", en:["The Baptism in the Jordan","The Holy Spirit descends upon Jesus as John baptizes Him, and the Father declares Him His beloved Son."], ta:["இயேசு யோர்தான் ஆற்றில் திருமுழுக்கு பெற்றது","யோவான் இயேசுவுக்கு திருமுழுக்கு கொடுக்கும்போது தூய ஆவி புறா வடிவில் அவர் மேல் இறங்குகிறது. பிதா இவரைத் தம் அன்பார்ந்த மைந்தன் என அறிவிக்கிறார்."] },
+            { r:1, i:"2", en:["The Wedding at Cana","At Mary's request, Jesus performs His first public miracle, transforming water into wine."], ta:["கானா ஊர் திருமணத்தில் இயேசு புதுமை செய்தது","அன்னை மரியாவின் வேண்டுகோளுக்கு இணங்கி, இயேசு தண்ணீரைத் திராட்சை இரசமாக மாற்றி, தமது முதல் பொதுப் புதுமையைச் செய்கிறார்."] },
+            { r:1, i:"3", en:["The Proclamation of the Kingdom","Jesus calls all to repentance and proclaims the arrival of the Kingdom of God."], ta:["இயேசு இறையாட்சியைப் பறைசாற்றியது","இயேசு மனிதர்களை மனம்மாறும்படி அழைத்து, கடவுளின் அரசாங்கம் நெருங்கி வந்துவிட்டது என்று பறைசாற்றுகிறார்."] },
+            { r:1, i:"4", en:["The Transfiguration","Jesus reveals His divine glory to Peter, James, and John atop Mount Tabor."], ta:["இயேசு தாபோர் மலையில் உருமாறியது","இயேசு தாபோர் மலையின் உச்சியில் அப்போஸ்தலர்களுக்குத் தமது தெய்வீக மகிமையை வெளிப்படுத்துகிறார்."] },
+            { r:1, i:"5", en:["The Institution of the Eucharist","At the Last Supper, Jesus offers His Body and Blood under the appearances of bread and wine."], ta:["இயேசு நற்கருணையை ஏற்படுத்தியது","இறுதி இரவு உணவின் போது, இயேசு அப்பத்தையும் திராட்சை இரசத்தையும் தமது திருவுடலாகவும் திருஇரத்தமாகவும் மாற்றி நற்கருணையை ஏற்படுத்துகிறார்."] },
+
+            { r:2, i:"1", en:["The Agony in the Garden","Jesus prays in anguish in the Garden of Gethsemane on the eve of His passion, submitting His will to the Father."], ta:["இயேசு பூங்காவனத்தில் இரத்த வேர்வை சிந்தியது","இயேசு கெத்சமனி தோட்டத்தில் தமது பாடுகளின் முன்தின இரவில் மிகுந்த வேதனையுடன் ஜெபிக்கிறார்."] },
+            { r:2, i:"2", en:["The Scourging at the Pillar","Jesus is tied to a stone pillar and brutally scourged by Roman soldiers."], ta:["இயேசு கற்றூணில் கட்டப்பட்டு அடிபட்டது","இயேசு ரோமானிய போர்வீரர்களால் கற்றூணில் கட்டப்பட்டு, கொடூரமாக சாட்டையால் அடிக்கப்படுகிறார்."] },
+            { r:2, i:"3", en:["The Crowning with Thorns","A crown of sharp thorns
