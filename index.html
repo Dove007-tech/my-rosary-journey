@@ -1,4 +1,4 @@
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +15,11 @@ html_content = """<!DOCTYPE html>
             min-height: 100vh;
             user-select: none;
             -webkit-user-select: none;
+            overflow-x: hidden;
+            position: relative;
         }
         .container { width: 100%; max-width: 550px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
+        
         .mary-inscription-panel { 
             text-align: center; 
             background: radial-gradient(circle, #FFFFFF 60%, #E3F2FD 100%);
@@ -24,114 +27,163 @@ html_content = """<!DOCTYPE html>
             border-radius: 30px; 
             padding: 22px; 
             margin-bottom: 20px; 
-            box-shadow: 0 8px 24px rgba(13,71,161,0.15);
+            box-shadow: 0 8px 24px rgba(13,71,161,0.12);
         }
-        .mary-quote { font-style: italic; font-size: 16px; color: #1565C0; margin-bottom: 12px; line-height: 1.5; font-weight: 700; }
+        .mary-quote { 
+            font-style: italic; 
+            font-size: 16px; 
+            color: #1565C0; 
+            margin-bottom: 12px; 
+            line-height: 1.5;
+            font-weight: 700;
+        }
         .main-title { font-size: 26px; font-weight: 900; color: #0D47A1; margin: 8px 0; text-transform: uppercase; letter-spacing: 0.5px; }
-        .lang-bar { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
-        .lang-btn { background-color: #FFF; border: 3px solid #0D47A1; color: #0D47A1; padding: 10px 24px; font-size: 14px; font-weight: 800; cursor: pointer; border-radius: 20px; transition: all 0.2s; font-family: sans-serif; }
-        .lang-btn.active { background-color: #0D47A1; color: #FFF; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .content-card { background-color: rgba(255, 255, 255, 0.96); border: 3px solid #4FC3F7; border-radius: 28px; padding: 22px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); margin-bottom: 20px; }
-        .interactive-mystery-box { padding: 16px; margin: 14px 0; background-color: #FFF; border: 3px solid #E3F2FD; border-radius: 22px; cursor: pointer; transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
-        .interactive-mystery-box.active-star { background: linear-gradient(135deg, #FFFDE7 0%, #FFF9C4 100%); border-color: #FFD54F; box-shadow: 0 6px 16px rgba(255,213,79,0.6); transform: scale(1.02) translateY(-2px); }
-        .interactive-mystery-box::after { content: "☆"; position: absolute; right: 16px; top: 14px; font-size: 22px; color: #BDBDBD; font-weight: 900; transition: all 0.2s; }
-        .interactive-mystery-box.active-star::after { content: "★"; color: #FBC02D; transform: scale(1.2) rotate(15deg); }
+        
+        .content-card { 
+            background-color: rgba(255, 255, 255, 0.96); 
+            border: 3px solid #4FC3F7; 
+            border-radius: 28px; 
+            padding: 22px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+            margin-bottom: 20px;
+        }
+        
+        .interactive-mystery-box { 
+            padding: 16px; 
+            margin: 14px 0; 
+            background-color: #FFF; 
+            border: 3px solid #E3F2FD; 
+            border-radius: 22px; 
+            cursor: pointer; 
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.01);
+            position: relative;
+        }
+        .interactive-mystery-box.active-star { 
+            background: linear-gradient(135deg, #FFFDE7 0%, #FFF9C4 100%); 
+            border-color: #FFD54F; 
+            box-shadow: 0 6px 16px rgba(255,213,79,0.5); 
+            transform: scale(1.02) translateY(-2px); 
+        }
+        
+        .interactive-mystery-box::after { 
+            content: "☆"; 
+            position: absolute; 
+            right: 18px; 
+            top: 14px; 
+            font-size: 22px; 
+            color: #BDBDBD; 
+            font-weight: 900; 
+            transition: all 0.2s; 
+        }
+        .interactive-mystery-box.active-star::after { 
+            content: "★"; 
+            color: #FBC02D; 
+            transform: scale(1.25) rotate(15deg); 
+        }
+
         .section-heading { font-size: 22px; color: #0D47A1; border-bottom: 4px solid #E3F2FD; padding-bottom: 6px; margin-top: 25px; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
         .section-heading:first-child { margin-top: 0; }
         .sub-entry-title { font-size: 17px; font-weight: 800; color: #B71C1C; margin-bottom: 6px; }
         .text-block { font-size: 16px; text-align: justify; margin: 0; color: #212121; font-weight: 500; }
+        
         .day-list { margin: 12px 0; padding-left: 20px; color: #212121; }
         .day-list li { margin-bottom: 8px; font-size: 16px; font-weight: 600; }
-        .lang-en, .lang-ta { display: none; }
-        body.lang-en-active .lang-en { display: block; }
-        body.lang-ta-active .lang-ta { display: block; }
+
+        .particle { position: absolute; pointer-events: none; font-size: 24px; animation: popUp 1.2s ease-out forwards; z-index: 100; }
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; }
+        }
     </style>
 </head>
-<body class="lang-en-active">
+<body>
+
     <div class="container">
+        <!-- Mother Mary's Own Scriptural Words at the Top Frame -->
         <div class="mary-inscription-panel">
-            <p class="mary-quote lang-en">"My soul magnifies the Lord, and my spirit rejoices in God my Savior, for he has looked on the humble estate of his servant." - Our Lady (Luke 1:46-48)</p>
-            <p class="mary-quote lang-ta">"எனது உள்ளம் ஆண்டவரை ஏத்திப் போற்றுகின்றது. எனது மீட்பராம் கடவுளை நினைத்து எனது மனம் மகிழ்ச்சியடைகின்றது." - மரியன்னை (லூக்கா 1:46-48)</p>
-            <h1 class="main-title lang-en">The Holy Rosary</h1>
-            <h1 class="main-title lang-ta">பரிசுத்த ஜெபமாலை</h1>
-            <div class="lang-bar">
-                <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">English</button>
-                <button class="lang-btn" id="btn-ta" onclick="setLanguage('ta')">தமிழ்</button>
-            </div>
+            <p class="mary-quote">"My soul magnifies the Lord, and my spirit rejoices in God my Savior, for he has looked on the humble estate of his servant." - Our Lady (Luke 1:46-48)</p>
+            <h1 class="main-title">The Holy Rosary</h1>
         </div>
 
+        <!-- Weekly Recitation Map Guide Card -->
         <div class="content-card">
-            <div class="lang-en">
-                <div class="section-heading">Weekly Mystery Guide</div>
-                <p class="text-block">The Mysteries of the Rosary are assigned to specific days of the week to structure our devotions:</p>
-                <ul class="day-list">
-                    <li><strong>Monday & Saturday:</strong> The Joyful Mysteries</li>
-                    <li><strong>Tuesday & Friday:</strong> The Sorrowful Mysteries</li>
-                    <li><strong>Wednesday & Sunday:</strong> The Glorious Mysteries</li>
-                    <li><strong>Thursday:</strong> The Luminous Mysteries</li>
-                </ul>
-            </div>
-            <div class="lang-ta">
-                <div class="section-heading">வாராந்திர மறைபொருள் வழிகாட்டி</div>
-                <p class="text-block">தினசரி பக்தியை ஒழுங்குபடுத்த ஜெபமாலையின் மறைபொருட்கள் வாரத்தின் குறிப்பிட்ட நாட்களுக்கு ஒதுக்கப்பட்டுள்ளன:</p>
-                <ul class="day-list">
-                    <li><strong>திங்கள் & சனி:</strong> மகிழ்ச்சி நிறை மறைபொருட்கள்</li>
-                    <li><strong>செவ்வாய் & வெள்ளி:</strong> துயரம் நிறை மறைபொருட்கள்</li>
-                    <li><strong>புதன் & ஞாயிறு:</strong> மகிமை நிறை மறைபொருட்கள்</li>
-                    <li><strong>வியாழன்:</strong> ஒளி நிறை மறைபொருட்கள்</li>
-                </ul>
-            </div>
+            <div class="section-heading">Weekly Mystery Guide</div>
+            <p class="text-block">The Mysteries of the Rosary are assigned to specific days of the week to structure our devotions:</p>
+            <ul class="day-list">
+                <li><strong>Monday & Saturday:</strong> The Joyful Mysteries</li>
+                <li><strong>Tuesday & Friday:</strong> The Sorrowful Mysteries</li>
+                <li><strong>Wednesday & Sunday:</strong> The Glorious Mysteries</li>
+                <li><strong>Thursday:</strong> The Luminous Mysteries</li>
+            </ul>
         </div>
 
+        <!-- Comprehensive 20 Mysteries Interactive Children's Deck Card -->
         <div class="content-card">
-            <div class="lang-en">
-                <div class="section-heading">The Joyful Mysteries</div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">1. The Annunciation</div>
-                    <p class="text-block">The Angel Gabriel appears to Mary, announcing she will conceive the Son of God by the power of the Holy Spirit.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">2. The Visitation</div>
-                    <p class="text-block">Mary journeys to visit her cousin Elizabeth, who recognizes her as the Mother of the Lord.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">3. The Nativity</div>
-                    <p class="text-block">Jesus Christ is born in a humble stable in Bethlehem, wrapped in swaddling clothes and laid in a manger.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">4. The Presentation</div>
-                    <p class="text-block">Mary and Joseph present the infant Jesus in the Temple according to the Law of Moses.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">5. The Finding in the Temple</div>
-                    <p class="text-block">After three days of anxious searching, Mary and Joseph find the young Jesus teaching the doctors in the Temple.</p>
-                </div>
+            
+            <div class="section-heading">The Joyful Mysteries</div>
+            
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">1. The Annunciation</div>
+                <p class="text-block">The Angel Gabriel appears to Mary, announcing she will conceive the Son of God by the power of the Holy Spirit.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">2. The Visitation</div>
+                <p class="text-block">Mary journeys to visit her cousin Elizabeth, who recognizes her as the Mother of the Lord.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">3. The Nativity</div>
+                <p class="text-block">Jesus Christ is born in a humble stable in Bethlehem, wrapped in swaddling clothes and laid in a manger.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">4. The Presentation</div>
+                <p class="text-block">Mary and Joseph present the infant Jesus in the Temple according to the Law of Moses.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">5. The Finding in the Temple</div>
+                <p class="text-block">After three days of anxious searching, Mary and Joseph find the young Jesus teaching the doctors in the Temple.</p>
+            </div>
 
-                <div class="section-heading">The Luminous Mysteries</div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">1. Baptism in the Jordan</div>
-                    <p class="text-block">The Holy Spirit descends upon Jesus as John baptizes Him, and the Father declares Him His beloved Son.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">2. The Wedding at Cana</div>
-                    <p class="text-block">At Mary's request, Jesus performs His first public miracle, transforming water into wine.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">3. Proclamation of the Kingdom</div>
-                    <p class="text-block">Jesus calls all to repentance and proclaims the arrival of the Kingdom of God.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">4. The Transfiguration</div>
-                    <p class="text-block">Jesus reveals His divine glory to Peter, James, and John atop Mount Tabor.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">5. Institution of the Eucharist</div>
-                    <p class="text-block">At the Last Supper, Jesus offers His Body and Blood under the appearances of bread and wine.</p>
-                </div>
+            <div class="section-heading">The Luminous Mysteries</div>
+            
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">1. Baptism in the Jordan</div>
+                <p class="text-block">The Holy Spirit descends upon Jesus as John baptizes Him, and the Father declares Him His beloved Son.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">2. The Wedding at Cana</div>
+                <p class="text-block">At Mary's request, Jesus performs His first public miracle, transforming water into wine.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">3. Proclamation of the Kingdom</div>
+                <p class="text-block">Jesus calls all to repentance and proclaims the arrival of the Kingdom of God.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">4. The Transfiguration</div>
+                <p class="text-block">Jesus reveals His divine glory to Peter, James, and John atop Mount Tabor.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">5. Institution of the Eucharist</div>
+                <p class="text-block">At the Last Supper, Jesus offers His Body and Blood under the appearances of bread and wine.</p>
+            </div>
 
-                <div class="section-heading">The Sorrowful Mysteries</div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
-                    <div class="sub-entry-title">1. The Agony in the Garden</div>
-                    <p class="text-block">Jesus prays in anguish in the Garden of Gethsemane on the eve of His passion, submitting His will to the Father.</p>
-                </div>
-                <div class="interactive-mystery-box" onclick="toggleStarHighlight(this)">
+            <div class="section-heading">The Sorrowful Mysteries</div>
+            
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">1. The Agony in the Garden</div>
+                <p class="text-block">Jesus prays in anguish in the Garden of Gethsemane on the eve of His passion, submitting His will to the Father.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">2. The Scourging at the Pillar</div>
+                <p class="text-block">Jesus is tied to a stone pillar and brutally scourged by Roman soldiers.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">3. The Crowning with Thorns</div>
+                <p class="text-block">A crown of sharp thorns is forced onto the head of Jesus to mock His kingship.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">4. The Carrying of the Cross</div>
+                <p class="text-block">Jesus carries the heavy wooden cross through the streets of Jerusalem toward Calvary.</p>
+            </div>
+            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
+                <div class="sub-entry-title">5. The Crucifixion</div>
