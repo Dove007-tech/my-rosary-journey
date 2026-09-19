@@ -10,17 +10,17 @@
         .mary-panel { text-align: center; background: radial-gradient(circle, #FFFFFF 60%, #E3F2FD 100%); border: 4px solid #4FC3F7; border-radius: 30px; padding: 22px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(13,71,161,0.12); }
         .mary-quote { font-style: italic; font-size: 16px; color: #1565C0; margin-bottom: 12px; line-height: 1.5; font-weight: 700; }
         .main-title { font-size: 26px; font-weight: 900; color: #0D47A1; margin: 8px 0; text-transform: uppercase; letter-spacing: 0.5px; }
-        .content-card { background-color: rgba(255, 255, 255, 0.96); border: 3px solid #4FC3F7; border-radius: 28px; padding: 22px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .interactive-mystery-box { padding: 16px; margin: 14px 0; background-color: #FFF; border: 3px solid #E3F2FD; border-radius: 22px; cursor: pointer; transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 3px 6px rgba(0,0,0,0.01); position: relative; }
-        .interactive-mystery-box.active-star { background: linear-gradient(135deg, #FFFDE7 0%, #FFF9C4 100%); border-color: #FFD54F; box-shadow: 0 6px 16px rgba(255,213,79,0.5); transform: scale(1.02) translateY(-2px); }
-        .interactive-mystery-box::after { content: "☆"; position: absolute; right: 18px; top: 14px; font-size: 22px; color: #BDBDBD; font-weight: 900; transition: all 0.2s; }
-        .interactive-mystery-box.active-star::after { content: "★"; color: #FBC02D; transform: scale(1.25) rotate(15deg); }
-        .section-heading { font-size: 22px; color: #0D47A1; border-bottom: 4px solid #E3F2FD; padding-bottom: 6px; margin-top: 25px; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
-        .section-heading:first-child { margin-top: 0; }
-        .sub-entry-title { font-size: 17px; font-weight: 800; color: #B71C1C; margin-bottom: 6px; }
-        .text-block { font-size: 16px; text-align: justify; margin: 0; color: #212121; font-weight: 500; }
-        .day-list { margin: 12px 0; padding-left: 20px; color: #212121; }
-        .day-list li { margin-bottom: 8px; font-size: 16px; font-weight: 600; }
+        .card { background-color: rgba(255, 255, 255, 0.96); border: 3px solid #4FC3F7; border-radius: 28px; padding: 22px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .mystery-box { padding: 16px; margin: 14px 0; background-color: #FFF; border: 3px solid #E3F2FD; border-radius: 22px; cursor: pointer; transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; box-shadow: 0 3px 6px rgba(0,0,0,0.01); }
+        .mystery-box.active-star { background: linear-gradient(135deg, #FFFDE7 0%, #FFF9C4 100%); border-color: #FFD54F; box-shadow: 0 6px 16px rgba(255,213,79,0.5); transform: scale(1.02) translateY(-2px); }
+        .mystery-box::after { content: "☆"; position: absolute; right: 18px; top: 14px; font-size: 22px; color: #BDBDBD; font-weight: 900; transition: all 0.2s; }
+        .mystery-box.active-star::after { content: "★"; color: #FBC02D; transform: scale(1.25) rotate(15deg); }
+        .heading { font-size: 21px; color: #0D47A1; border-bottom: 4px solid #E3F2FD; padding-bottom: 6px; margin-top: 25px; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+        .heading:first-child { margin-top: 0; }
+        .sub { font-size: 17px; font-weight: 800; color: #B71C1C; margin-bottom: 6px; }
+        .txt { font-size: 16px; text-align: justify; margin: 0; color: #212121; font-weight: 500; }
+        .list { margin: 12px 0; padding-left: 20px; color: #212121; }
+        .list li { margin-bottom: 8px; font-size: 16px; font-weight: 600; }
         .particle { position: absolute; pointer-events: none; font-size: 24px; animation: popUp 1.2s ease-out forwards; z-index: 100; }
         @keyframes popUp { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; } }
     </style>
@@ -31,93 +31,67 @@
             <p class="mary-quote">"My soul magnifies the Lord, and my spirit rejoices in God my Savior, for he has looked on the humble estate of his servant." - Our Lady (Luke 1:46-48)</p>
             <h1 class="main-title">The Holy Rosary</h1>
         </div>
-
-        <div class="content-card">
-            <div class="section-heading">Weekly Mystery Guide</div>
-            <p class="text-block">The Mysteries of the Rosary are assigned to specific days of the week to structure our devotions:</p>
-            <ul class="day-list">
+        <div class="card">
+            <div class="heading">Weekly Mystery Guide</div>
+            <p class="txt">The Mysteries of the Rosary are assigned to specific days of the week to structure our devotions:</p>
+            <ul class="list">
                 <li><strong>Monday & Saturday:</strong> The Joyful Mysteries</li>
                 <li><strong>Tuesday & Friday:</strong> The Sorrowful Mysteries</li>
                 <li><strong>Wednesday & Sunday:</strong> The Glorious Mysteries</li>
                 <li><strong>Thursday:</strong> The Luminous Mysteries</li>
             </ul>
         </div>
-
-        <div class="content-card">
-            <div class="section-heading">The Joyful Mysteries</div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">1. The Annunciation</div>
-                <p class="text-block">The Angel Gabriel appears to Mary, announcing she will conceive the Son of God by the power of the Holy Spirit.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">2. The Visitation</div>
-                <p class="text-block">Mary journeys to visit her cousin Elizabeth, who recognizes her as the Mother of the Lord.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">3. The Nativity</div>
-                <p class="text-block">Jesus Christ is born in a humble stable in Bethlehem, wrapped in swaddling clothes and laid in a manger.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">4. The Presentation</div>
-                <p class="text-block">Mary and Joseph present the infant Jesus in the Temple according to the Law of Moses.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">5. The Finding in the Temple</div>
-                <p class="text-block">After three days of anxious searching, Mary and Joseph find the young Jesus teaching the doctors in the Temple.</p>
-            </div>
-
-            <div class="section-heading">The Luminous Mysteries</div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">1. Baptism in the Jordan</div>
-                <p class="text-block">The Holy Spirit descends upon Jesus as John baptizes Him, and the Father declares Him His beloved Son.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">2. The Wedding at Cana</div>
-                <p class="text-block">At Mary's request, Jesus performs His first public miracle, transforming water into wine.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">3. Proclamation of the Kingdom</div>
-                <p class="text-block">Jesus calls all to repentance and proclaims the arrival of the Kingdom of God.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">4. The Transfiguration</div>
-                <p class="text-block">Jesus reveals His divine glory to Peter, James, and John atop Mount Tabor.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">5. Institution of the Eucharist</div>
-                <p class="text-block">At the Last Supper, Jesus offers His Body and Blood under the appearances of bread and wine.</p>
-            </div>
-
-            <div class="section-heading">The Sorrowful Mysteries</div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">1. The Agony in the Garden</div>
-                <p class="text-block">Jesus prays in anguish in the Garden of Gethsemane on the eve of His passion, submitting His will to the Father.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">2. The Scourging at the Pillar</div>
-                <p class="text-block">Jesus is tied to a stone pillar and brutally scourged by Roman soldiers.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">3. The Crowning with Thorns</div>
-                <p class="text-block">A crown of sharp thorns is forced onto the head of Jesus to mock His kingship.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">4. The Carrying of the Cross</div>
-                <p class="text-block">Jesus carries the heavy wooden cross through the streets of Jerusalem toward Calvary.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">5. The Crucifixion</div>
-                <p class="text-block">Jesus is nailed to the cross and dies after three hours of intense agony for our redemption.</p>
-            </div>
-
-            <div class="section-heading">The Glorious Mysteries</div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">1. The Resurrection</div>
-                <p class="text-block">Jesus rises gloriously from the dead on the third day, conquering sin and death forever.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">2. The Ascension</div>
-                <p class="text-block">Forty days after His Resurrection, Jesus ascends body and soul into Heaven to sit at the right hand of the Father.</p>
-            </div>
-            <div class="interactive-mystery-box" onclick="handleBoxClick(event, this)">
-                <div class="sub-entry-title">3. The Descent of the Holy Spirit</div>
+        <div class="card" id="main-view"></div>
+    </div>
+    <script>
+        const cats = ["The Joyful Mysteries", "The Luminous Mysteries", "The Sorrowful Mysteries", "The Glorious Mysteries"];
+        const dataset = [
+            { c:0, i:1, t:"The Annunciation", d:"The Angel Gabriel appears to Mary, announcing she will conceive the Son of God by the power of the Holy Spirit." },
+            { c:0, i:2, t:"The Visitation", d:"Mary journeys to visit her cousin Elizabeth, who recognizes her as the Mother of the Lord." },
+            { c:0, i:3, t:"The Nativity", d:"Jesus Christ is born in a humble stable in Bethlehem, wrapped in swaddling clothes and laid in a manger." },
+            { c:0, i:4, t:"The Presentation", d:"Mary and Joseph present the infant Jesus in the Temple according to the Law of Moses." },
+            { c:0, i:5, t:"The Finding in the Temple", d:"After three days of anxious searching, Mary and Joseph find the young Jesus teaching the doctors in the Temple." },
+            { c:1, i:1, t:"Baptism in the Jordan", d:"The Holy Spirit descends upon Jesus as John baptizes Him, and the Father declares Him His beloved Son." },
+            { c:1, i:2, t:"The Wedding at Cana", d:"At Mary's request, Jesus performs His first public miracle, transforming water into wine." },
+            { c:1, i:3, t:"Proclamation of the Kingdom", d:"Jesus calls all to repentance and proclaims the arrival of the Kingdom of God." },
+            { c:1, i:4, t:"The Transfiguration", d:"Jesus reveals His divine glory to Peter, James, and John atop Mount Tabor." },
+            { c:1, i:5, t:"Institution of the Eucharist", d:"At the Last Supper, Jesus offers His Body and Blood under the appearances of bread and wine." },
+            { c:2, i:1, t:"The Agony in the Garden", d:"Jesus prays in anguish in the Garden of Gethsemane on the eve of His passion, submitting His will to the Father." },
+            { c:2, i:2, t:"The Scourging at the Pillar", d:"Jesus is tied to a stone pillar and brutally scourged by Roman soldiers." },
+            { c:2, i:3, t:"The Crowning with Thorns", d:"A crown of sharp thorns is forced onto the head of Jesus to mock His kingship." },
+            { c:2, i:4, t:"The Carrying of the Cross", d:"Jesus carries the heavy wooden cross through the streets of Jerusalem toward Calvary." },
+            { c:2, i:5, t:"The Crucifixion", d:"Jesus is nailed to the cross and dies after three hours of intense agony for our redemption." },
+            { c:3, i:1, t:"The Resurrection", d:"Jesus rises gloriously from the dead on the third day, conquering sin and death forever." },
+            { c:3, i:2, t:"The Ascension", d:"Forty days after His Resurrection, Jesus ascends body and soul into Heaven to sit at the right hand of the Father." },
+            { c:3, i:3, t:"The Descent of the Holy Spirit", d:"The Holy Spirit descends in tongues of fire upon Mary and the Apostles gathered in the upper room." },
+            { c:3, i:4, t:"The Assumption", d:"At the end of her earthly life, the Virgin Mary is assumed body and soul into heavenly glory." },
+            { c:3, i:5, t:"The Coronation of Mary", d:"Mary is crowned by her Divine Son as Queen of Heaven and Earth, our advocate and Mother." }
+        ];
+        function render() {
+            let out = '';
+            cats.forEach((cat, idx) => {
+                out += '<div class="heading">' + cat + '</div>';
+                dataset.filter(x => x.c === idx).forEach(x => {
+                    out += '<div class="mystery-box" onclick="handleBoxClick(event, this)">' +
+                           '<div class="sub">' + x.i + '. ' + x.t + '</div>' +
+                           '<p class="txt">' + x.d + '</p></div>';
+                });
+            });
+            document.getElementById('main-view').innerHTML = out;
+        }
+        function handleBoxClick(event, element) {
+            element.classList.toggle('active-star');
+            if (element.classList.contains('active-star')) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerText = '✨';
+                particle.style.left = event.pageX + 'px';
+                particle.style.top = event.pageY + 'px';
+                document.body.appendChild(particle);
+                setTimeout(() => { particle.remove(); }, 1200);
+            }
+        }
+        render();
+    </script>
+</body>
+</html>
